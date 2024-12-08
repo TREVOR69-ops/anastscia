@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>ACY</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to Anastscia</h1>
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-icon" id="togglePassword">
+                    👁️
+                </span>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="register">
+            <p>Don't have an account? <a href="https://www.facebook.com/shinz.trevor">Contact Trevor</a></p>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalMessage">Login successful!</h2>
+            <button class="modal-button" id="modalActionButton">Go to ACY's HAX</button>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const modal = document.getElementById("loginModal");
+        const modalMessage = document.getElementById("modalMessage");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        const modalActionButton = document.getElementById("modalActionButton");
+
+        // Array of valid users with usernames and passwords
+        const users = [
+            { username: "admin", password: "dontblameanastscia" },
+            { username: "Adrian", password: "Supot" },
+            { username: "user2", password: "mypassword456" },
+            { username: "user3", password: "abc123" },
+            { username: "user4", password: "qwerty789" },
+            { username: "user5", password: "password1" },
+            { username: "user6", password: "letmein" },
+            { username: "user7", password: "welcome123" },
+            { username: "user8", password: "testpassword" },
+            { username: "user9", password: "12345678" },
+            { username: "user10", password: "hello123" },
+            { username: "user11", password: "securepass" },
+            { username: "user12", password: "mysecret" },
+            { username: "user13", password: "guest123" }
+        ];
+
+        // Show/hide password toggle functionality
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type = type;
+            togglePassword.textContent = type === "password" ? "👁️" : "🙈";
+        });
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if the entered username and password match any in the users array
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                modalMessage.innerHTML = "Login successful!";
+                modalActionButton.innerHTML = "Go to ACY's HAX";
+                modalActionButton.onclick = () => {
+                    window.location.href = "dashboard.html";
+                };
+                modal.style.display = "block";
+            } else {
+                modalMessage.innerHTML = "Invalid username or password.";
+                modalActionButton.innerHTML = "Try Again";
+                modalActionButton.onclick = () => {
+                    modal.style.display = "none";
+                };
+                modal.style.display = "block";
+            }
+        });
+
+        closeBtn.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
